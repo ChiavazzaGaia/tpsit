@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <style>
+    html {
+  height: 100%;
+  width: 100%;
+}
+
+  </style>
+</head>
+
+<body>
+<center>
+  <input id="inputText">
+  <button onclick="buttonIsClicked()">BOTTONE</button>
+  <h1 id="myOutput">
+    Scrivi un numero maggiore di 0
+  </h1>
+</center>
+  <script>
+    let i;
+
+function buttonIsClicked(){
+
+  document.getElementById("myOutput").innerHTML = " ";
+  let input = document.getElementById("inputText").value;
+  
+  for(i=1;i<=input;i++){
+
+    document.getElementById("myOutput").innerHTML += " " + i;
+    
+  }
+
+  document.getElementById("myOutput").innerHTML += " " + " | 10%= " + (input * 0.1);
+
+}
+  </script>
+</body>
+
+</html>
