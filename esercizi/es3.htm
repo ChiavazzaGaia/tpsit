@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <style src="style.css"></style>
+</head>
+
+<body>
+<center>
+  <h1 id="myOutput">
+    Premi il bottone!
+  </h1>
+</center>
+  <script>
+    let i=1, i2, mult, timer2;
+
+let timer1 = setInterval(contatore, 1000);
+
+document.getElementById("myOutput").innerHTML= " ";
+
+function contatore(){
+  
+  document.getElementById("myOutput").innerHTML += " " + i;
+  i++;
+
+  if(i==6){
+  timer2 = setInterval(tabelline, 1000);
+  clearInterval(timer1);
+  }
+}
+
+function tabelline(){
+  for(i2=1;i2<11;i2++){
+
+    for(i3=1;i3<11;i3++){
+      mult= i2*i3
+      document.getElementById("myOutput").innerHTML += "<br>" + mult;
+    }
+  }
+  clearInterval(timer2);
+}
+  </script>
+</body>
+
+</html>
