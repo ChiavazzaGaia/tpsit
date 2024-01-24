@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <input id="input">
+  <button onclick="buttonIsClicked()">Premimi</button>
+  <script>
+  let i = 0;
+
+function buttonIsClicked() {
+
+  let times = document.getElementById("input").value;
+
+  for (i = 0; i < times; i++) {
+
+    const newDiv = document.createElement("div");
+    newDiv.style.width = "10px";
+    newDiv.style.height = "10px";
+    newDiv.style.border = "1px solid black";
+    newDiv.style.margin = "10px";
+    newDiv.style.backgroundColor = "cornflowerblue";
+
+
+    document.body.appendChild(newDiv);
+
+  }
+
+}
+  </script>
+</body>
+
+</html>
