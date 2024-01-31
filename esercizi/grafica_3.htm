@@ -9,8 +9,17 @@
 </head>
 
 <body>
+  <center>
+  <div id="textBox">
+
+    <h1>Punteggi</h1>
+    <h1 id="mareScore">Punti mare= 0</h1>
+    <h1 id="montagnaScore">Punti montagna= 0</h1>
+    
+  </div>
+  </center>
 <script>
-    let i, contaRighe=0;
+let i, contaRighe=0, contaMare=0, contaMontagna=0;
 
 window.onload = loremIpsum();
 
@@ -20,23 +29,45 @@ function loremIpsum(){
 
   if(i%2==0){
 
-    const newDiv = document.createElement("div");
-    newDiv.style.width = "10px";
-    newDiv.style.height = "10px";
+    const newDiv = document.createElement("div");  //Aggiunge il div
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
     newDiv.style.border = "1px solid black";
     newDiv.style.backgroundColor = "DarkGrey";
     newDiv.style.display= "inline-block";
+    
+    const imgElement = document.createElement("img");  //Aggiunge l'immagine
+    imgElement.src = "montagna.jpg";
+    imgElement.style.width = "90px";
+    imgElement.style.height = "90px";
+    imgElement.style.padding = "5px";
+    newDiv.appendChild(imgElement);
 
+    imgElement.addEventListener("click", function() {   //La rende clickabile
+    clickMontagna();
+    });
+      
     document.body.appendChild(newDiv); 
   }else{
 
-    const newDiv = document.createElement("div");
-    newDiv.style.width = "10px";
-    newDiv.style.height = "10px";
+    const newDiv = document.createElement("div");  //Aggiunge il div
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
     newDiv.style.border = "1px solid black";
     newDiv.style.backgroundColor = "DimGray";
     newDiv.style.display= "inline-block";
 
+    const imgElement = document.createElement("img");  //Aggiunge l'immagine
+    imgElement.src = "mare.jpg";
+    imgElement.style.width = "90px";
+    imgElement.style.height = "90px";
+    imgElement.style.padding = "5px";
+    newDiv.appendChild(imgElement);
+
+    imgElement.addEventListener("click", function() {   //La rende clickabile
+    clickMare();
+    });
+    
     document.body.appendChild(newDiv); 
   }
   contaRighe++;
@@ -48,6 +79,20 @@ function loremIpsum(){
     } 
     
   }
+
+}
+
+function clickMontagna(){
+
+  contaMontagna++;
+  document.getElementById("montagnaScore").innerHTML = "Punti montagna= " + contaMontagna;
+  
+}
+
+function clickMare(){
+
+  contaMare++;
+  document.getElementById("mareScore").innerHTML = "Punti mare= " + contaMare;
 
 }
   </script>
