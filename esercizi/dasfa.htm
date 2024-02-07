@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <center>
+  <div id="textBox">
+  </div>
+  </center>
+<script>
+let i, contaRighe=0, contaMare=0, contaMontagna=0;
+
+window.onload = loremIpsum();
+
+function loremIpsum(){
+
+  for(i=0; i<100; i++){
+
+  if(i%2==0){
+
+    const newDiv = document.createElement("div");  //Aggiunge il div
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
+    newDiv.style.border = "1px solid black";
+    newDiv.style.backgroundColor = "DarkGrey";
+    newDiv.style.display= "inline-block";
+    
+    const imgElement = document.createElement("img");  //Aggiunge l'immagine
+    imgElement.src = "montagna.jpg";
+    imgElement.style.width = "90px";
+    imgElement.style.height = "90px";
+    imgElement.style.padding = "5px";
+      
+    document.body.appendChild(newDiv); 
+  }else{
+
+    const newDiv = document.createElement("div");  //Aggiunge il div
+    newDiv.style.width = "100px";
+    newDiv.style.height = "100px";
+    newDiv.style.border = "1px solid black";
+    newDiv.style.backgroundColor = "DimGray";
+    newDiv.style.display= "inline-block";
+
+    const imgElement = document.createElement("img");  //Aggiunge l'immagine
+    imgElement.src = "mare.jpg";
+    imgElement.style.width = "90px";
+    imgElement.style.height = "90px";
+    imgElement.style.padding = "5px";
+    
+    document.body.appendChild(newDiv); 
+  }
+  contaRighe++;
+
+
+    if (contaRighe % 10 === 0) {
+      var newElem = document.createElement("br");
+      document.body.appendChild(newElem);
+    } 
+    
+  }
+
+}
+  </script>
+</body>
+
+</html>
