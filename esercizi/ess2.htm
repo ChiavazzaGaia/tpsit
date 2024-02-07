@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <center>
+    <input id="voto">
+    <button onclick="calcolaVoto()">Calcola il voto</button>
+    <p id="output"></p>
+    <br><br><br>
+    <input id="voto0">
+    <input id="voto1">
+    <input id="voto2">
+    <input id="voto3">
+    <input id="voto4">
+    <br>
+    <button onclick="calcolaMinore()">Calcola il minore</button>
+    <p id="outputMinore"></p>
+  </center>
+  <script>
+let votoMin = 999
+
+function calcolaVoto(){
+
+  voto = document.getElementById("voto").value;
+  votoTot = voto * 3;
+  document.getElementById("output").innerHTML = votoTot + "/30";
+  
+}
+
+function calcolaMinore(){
+
+  let votoArray = new Array(5);
+
+  for(let i=0; i<5; i++){
+
+    votoArray[i] = document.getElementById("voto" + i).value;
+    
+  }
+
+  for(let i=0; i<5; i++){
+
+    if(votoMin>votoArray[i]){
+
+      votoMin = votoArray[i];
+      
+    }
+
+  }
+  
+  document.getElementById("outputMinore").innerHTML = votoMin
+}</script>
+</body>
+
+</html>
