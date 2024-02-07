@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <center>
+  <input id="inputPeso" placeholder="Scrivere il peso">
+    <br><br>
+  <button onclick="mercurioButton()">Mercurio</button>
+    <br><br>
+  <button onclick="venereButton()">Venere</button>
+    <br><br>
+  <button onclick="terraButton()">Terra</button>
+    <br><br>
+  <button onclick="marteButton()">Marte</button>
+    <br><br>
+  <button onclick="gioveButton()">Giove</button>
+    <br><br>
+  <button onclick="saturnoButton()">Saturno</button>
+    <br><br>
+  <button onclick="uranoButton()">Urano</button>
+    <br><br>
+  <button onclick="nettunoButton()">Nettuno</button>
+    <br><br>
+  <p id="output">Peso finale= </p>
+  
+  </center>
+  <script>
+    let peso, pesoTot
+
+function mercurioButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 0.3;
+  document.getElementById("output").innerHTML = pesoTot;
+  
+}
+
+function venereButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 0.9;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function terraButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 1;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function marteButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 0.3;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function gioveButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 2.3;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function saturnoButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 0.9;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function uranoButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 0.8;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+
+function nettunoButton(){
+
+  peso = document.getElementById("inputPeso").value;
+  pesoTot = peso * 1.1;
+  document.getElementById("output").innerHTML = pesoTot;
+
+}
+  </script>
+</body>
+
+</html>
