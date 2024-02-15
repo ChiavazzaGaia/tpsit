@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+<center>
+
+    <input id="raggio" placeholder="raggio del cerchio"><br>
+    <button onclick="calcolaArea()">Calcola l'area</button>
+    <p id="outputArea">Area</p>
+    <button onclick="stampaQuadrati()">Stampa dei quadrati</button>
+
+</center>
+                                      invece di ^2 scrivi * altezza
+<script>
+    
+let area, raggio;
+
+function calcolaArea(){
+
+    raggio = document.getElementById("raggio").value;
+    area = 3.14159265358979323846 * (raggio * raggio);
+    document.getElementById("outputArea").innerHTML = area;
+
+}
+
+function stampaQuadrati(){
+
+    for(let i=0; i<=area; i++){
+
+        const newDiv = document.createElement("div");
+        newDiv.style.width = "20px";
+        newDiv.style.height = "20px";
+        newDiv.style.border = "1px solid black";
+        newDiv.style.backgroundColor = "DarkGrey";
+        newDiv.style.display= "inline-block";
+
+        document.body.appendChild(newDiv);
+
+    }
+
+}
+
+</script>
+</body>
+</html>
