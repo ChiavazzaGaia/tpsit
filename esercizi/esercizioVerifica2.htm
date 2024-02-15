@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+<center>
+
+    <button onclick="button2()">Aumenta di 2</button>
+    <button onclick="button3()">Aumenta di 3</button>
+    <button onclick="button7()">Aumenta di 7</button>
+    <p id="output">10</p>
+
+</center>
+
+<script>
+
+let sum=10;
+
+function button2(){
+
+    sum+=2;
+    document.getElementById("output").innerHTML = sum;
+
+}
+
+function button3(){
+
+    sum+=3;
+    document.getElementById("output").innerHTML = sum;
+
+}
+
+
+function button7(){
+
+    sum+=7;
+    document.getElementById("output").innerHTML = sum;
+
+}
+
+
+</script>
+</body>
+</html>
