@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <center>
+    <button onclick="buttonSogg()">Aggiungi soggetto</button>
+    <button onclick="buttonVerb()">Aggiungi verbo</button>
+    <button onclick="buttonComp()">Aggiungi complemento</button>
+    <br><br>
+    <button onclick="creaFrasi()">Crea le frasi!</button>
+    <br>
+    <p id="pSogg"></p>
+    <p id="pVerb"></p>
+    <p id="pComp"></p>
+    <p id="pFrasi"></p>
+  </center>
+    
+  <script>
+
+    const soggettoArray = [];
+    const verboArray = [];
+    const complementoArray = [];
+
+    function buttonSogg(){
+
+      soggettoArray.push(prompt("Inserire un soggetto"));
+      document.getElementById("pSogg").innerHTML = soggettoArray.join(" ");
+    }
+    function buttonVerb(){
+
+      verboArray.push(prompt("Inserire un verbo"));
+      document.getElementById("pVerb").innerHTML = verboArray.join(" ");
+    }
+    function buttonComp(){
+
+      complementoArray.push(prompt("Inserire un complemento"));
+      document.getElementById("pComp").innerHTML = complementoArray.join(" ");
+    }
+
+    function creaFrasi(){
+
+      const frasi = [];
+      for(let i = 0; i < soggettoArray.length; i++){
+        for(let i2 = 0; i2 < verboArray.length; i2++){
+          for(let i3 = 0; i3 < complementoArray.length; i3++){
+            const soggetto = soggettoArray[i] || '';
+            const verbo = verboArray[i2] || '';
+            const complemento = complementoArray[i3] || '';
+            frasi.push(soggettoArray[i] + " " + verboArray[i2] + " " + complementoArray[i3] + "<br>");
+          }
+        }     
+      }
+
+      let randNum = Math.floor(Math.random() * frasi.length);
+      const frasiUnique = [];
+      let i = 0;
+      const usedIndices = new Set();
+      do {
+        randNum = Math.floor(Math.random() * frasi.length);
+        if (!usedIndices.has(randNum)) {
+          frasiUnique.push(frasi[randNum]);
+          usedIndices.add(randNum);
+          document.getElementById("pFrasi").innerHTML = frasiUnique.join("");
+          i++;
+        }
+      } while (i < frasi.length && usedIndices.size < frasi.length);
+    }
+
+  </script>
+</body>
+
+</html>
