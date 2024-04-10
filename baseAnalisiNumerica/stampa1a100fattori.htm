@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>Cover Template · Bootstrap v5.0</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/" &gt; <!-- Bootstrap core CSS -->
+  <link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="cover.css" rel="stylesheet">
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">Gaia Chiavazza</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+        </nav>
+      </div>
+    </header>
+
+    <main class="px-3">
+      <!--Creo un programma js che stampa i numeri da 1 a 100-->
+      <button onclick="caricaArray(100)">Numeri</button>
+      <p id="out">&nbsp;</p>
+      <p id="outPari">&nbsp;</p>
+      <p id="outDispari">&nbsp;</p></br></br>
+      <input placeholder="Inserisci un numero" id="numInput" type="number">
+      <p id="fattori">I fattori del numero sono </p>
+      <button onclick="calcFattori()">Calcola i fattori</button>
+    </main>
+
+    <footer class="mt-auto text-white-50">
+      <p>Cover template for <a href="https://getbootstrap.com/&quot; class=" text-white">Bootstrap</a>, by <a
+          href="https://twitter.com/mdo&quot; class=" text-white">@mdo</a>.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    let n = 100;
+    let arrayNumeri = [];
+    let arrayNumeriPari = [];
+    let arrayNumeriDispari = [];
+    let num = 0;
+
+    function caricaArray(numeri){
+      for (let i = 0; i <= numeri; i++) {
+        arrayNumeri.push(i);
+        if(i%2==0){
+          arrayNumeriPari.push(i);
+        }else{
+          arrayNumeriDispari.push(i);
+        }
+      }
+      document.getElementById("out").innerHTML = arrayNumeri
+      document.getElementById("outPari").innerHTML = arrayNumeriPari
+      document.getElementById("outDispari").innerHTML = arrayNumeriDispari
+    }
+
+    function calcFattori(){
+      let contaFattori=0
+      num = document.getElementById("numInput").value
+      for (let i = 0; i <= n/2; i++) {
+        if(num%i==0 && i != 1){
+          contaFattori++
+          document.getElementById("fattori").innerHTML += i + " "
+        }
+      }
+      document.getElementById("fattori").innerHTML += ", ovvero sono " + contaFattori
+    }
+    
+  </script>
+
+
+
+</body>
+
+</html>
