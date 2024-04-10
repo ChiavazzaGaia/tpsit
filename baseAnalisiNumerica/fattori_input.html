@@ -41,7 +41,8 @@
     <main class="px-3">
         <br><br><br><br><br><br>
       <input placeholder="Inserisci un numero" id="numInput" type="number">
-      <p id="fattori">I fattori del numero sono </p>
+      <p id="outputPrimi">&nbsp;</p>
+      <p id="fattori">&nbsp;</p>
       <button onclick="calcFattori()">Calcola i fattori</button>
     </main>
 
@@ -56,6 +57,8 @@
     let n = 100;
     let arrayNumeri = [];
     let num = 0;
+    let numeriUtili = [];
+    let contaPrimi=0;
 
     function caricaArray(numeri){
       for (let i = 0; i <= numeri; i++) {
@@ -64,20 +67,29 @@
     }
 
     function calcFattori(){
-      document.getElementById("fattori").innerHTML = "I fattori del numero sono "
-      let contaFattori=0
+      document.getElementById("fattori").innerHTML = ""
       num = document.getElementById("numInput").value
       if(isNaN(num) || num<0){
         document.getElementById("fattori").innerHTML = "ERRORE! NUMERO MANCANTE O MINORE DI 0"
         return 0
       }
-      for (let i = 0; i <= num/2; i++) {
-        if(num%i==0 && i != 1){
-          contaFattori++
-          document.getElementById("fattori").innerHTML += i + " "
+      for (let i2=0; i2 <= num; i2++){
+      let contaFattori=0
+      numeriUtili = []
+        for (let i = 0; i <= i2/2; i++) {
+          if(i2%i==0 && i != 1){
+            contaFattori++
+            numeriUtili.push(i + ", ")
+          }
+      }
+      if(numeriUtili.length!=0){  
+          document.getElementById("fattori").innerHTML += i2 + " | I fattori del numero sono " + numeriUtili + "ovvero sono " + contaFattori + " fattori <br>"
+        }else{
+          contaPrimi++
+          document.getElementById("fattori").innerHTML += i2 + " | e' un numero primo <br>"
         }
       }
-      document.getElementById("fattori").innerHTML += ", ovvero sono " + contaFattori + " fattori"
+      document.getElementById("outputPrimi").innerHTML = "Ci sono " + contaPrimi + " numeri primi"
     }
     
   </script>
