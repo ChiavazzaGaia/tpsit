@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.84.0">
+  <title>Cover Template · Bootstrap v5.0</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/" &gt; <!-- Bootstrap core CSS -->
+  <link href="./bootstrap-5.3.3-examples/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+
+
+  <!-- Custom styles for this template -->
+  <link href="cover.css" rel="stylesheet">
+</head>
+
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+
+    <main class="px-3">
+        <br><br><br><br><br><br>
+      <input placeholder="Inserisci un numero" id="numInput" type="number">
+      <p id="fattori">I fattori del numero sono </p>
+      <button onclick="calcFattori()">Calcola i fattori</button>
+    </main>
+
+    <footer class="mt-auto text-white-50">
+      <p>Cover template for <a href="https://getbootstrap.com/&quot; class=" text-white">Bootstrap</a>, by <a
+          href="https://twitter.com/mdo&quot; class=" text-white">@mdo</a>.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    let n = 100;
+    let arrayNumeri = [];
+    let num = 0;
+
+    function caricaArray(numeri){
+      for (let i = 0; i <= numeri; i++) {
+        arrayNumeri.push(i);
+      }
+    }
+
+    function calcFattori(){
+      document.getElementById("fattori").innerHTML = "I fattori del numero sono "
+      let contaFattori=0
+      num = document.getElementById("numInput").value
+      if(isNaN(num) || num<0){
+        document.getElementById("fattori").innerHTML = "ERRORE! NUMERO MANCANTE O MINORE DI 0"
+        return 0
+      }
+      for (let i = 0; i <= num/2; i++) {
+        if(num%i==0 && i != 1){
+          contaFattori++
+          document.getElementById("fattori").innerHTML += i + " "
+        }
+      }
+      document.getElementById("fattori").innerHTML += ", ovvero sono " + contaFattori + " fattori"
+    }
+    
+  </script>
+
+
+
+</body>
+
+</html>
