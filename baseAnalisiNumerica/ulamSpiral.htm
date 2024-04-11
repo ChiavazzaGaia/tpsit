@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+
+    .spiraleBorder {
+      border: 5px solid #333;
+      border-radius: 10px;
+    }
+
+    #drawButton {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition-duration: 0.4s;
+    }
+
+    #drawButton:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <center>
+    <button id="drawButton" onclick="buttonWasPressed()">Disegna la spirale</button>
+  </center>
+  <br>
+  <center>
+    <canvas id="spiraleCanvas" width="400" height="400" style=""></canvas>
+  </center>
+
+  <script>
+
+    let howManyTimes = 50   //Cambia per aumentare quante volte
+    let spiralElement = spiraleCanvas.getContext("2d");
+    let boxSize = 50
+    let turner = 1;
+    let isprime = true
+    let squareX = 0
+    let squareY = 0
+    let array = [];
+    const arraySize = 100
+    let cubesAmount = 1;
+    let intervalTime
+    let timesLooped=0
+    let cubeNum=0
+
+    function buttonWasPressed(){
+      howManyTimes *= 2
+      boxSize /= 2
+      turner = 1;
+      isprime = true
+      squareX = 0
+      squareY = 0
+      array = []
+      cubesAmount = 1
+      timesLooped=0
+      cubeNum=0
+      clearInterval(intervalTime)
+      drawSpiral()
+    }
+    
+    function drawSpiral() {
+      let spiraleCanvas = document.getElementById("spiraleCanvas");
+
+      let viewportWidth = window.innerWidth;
+      let viewportHeight = window.innerHeight;
+      let minDimension = Math.min(viewportWidth, viewportHeight);
+      spiraleCanvas.width = spiraleCanvas.height = minDimension;
+      spiraleCanvas.classList.add("spiraleBorder");
+      squareX = (spiraleCanvas.width - boxSize) / 2;
+      squareY = (spiraleCanvas.height - boxSize) / 2;
+
+      caricaArray();
+      
+      spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
+      intervalTime = setInterval(printSquares, 1)
+    }
+
+    function printSquares() {
+      
+      for (let j = 0; j < 2; j++) {
+          for (let i2 = 0; i2 < cubesAmount; i2++) {
+            switch (turner%4) {
+              case 0:
+                squareX += boxSize
+                break;
+              case 1:
+                squareY += boxSize
+                break;
+              case 2:
+                squareX -= boxSize
+                break;
+              case 3:
+                squareY -= boxSize
+                break;
+            }
+            isPrime=true
+
+            for (i3 = 2; i3 < Math.sqrt(cubeNum); i3++){
+              if (cubeNum % i3 == 0){
+                isPrime = false;
+                break;
+              }
+            }
+
+            if (isPrime==true) {
+                spiralElement.fillStyle = "black";
+            } else{
+                spiralElement.fillStyle = "white";
+            }
+            
+            spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
+            cubeNum++
+          }
+          turner++
+        }
+        cubesAmount++
+        timesLooped++
+        if(timesLooped>=howManyTimes){
+          clearInterval(intervalTime)
+        }
+      
+      }
+
+    function caricaArray() {
+      for (let i = 1; i < arraySize; i++) {
+        array[i] = i;
+      }
+    }
+  </script>
+</body>
+
+</html>
