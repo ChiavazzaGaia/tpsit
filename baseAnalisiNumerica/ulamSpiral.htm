@@ -41,6 +41,8 @@
 <body>
   <center>
     <button id="drawButton" onclick="buttonWasPressed()">Disegna la spirale</button>
+    <button onclick="manualLoad()">MANUAL PRESS FIRST</button>
+    <button onclick="printSquares()">DRAW SQUARES (PRESS ONCE PER SQUARE)</button>
   </center>
   <br>
   <center>
@@ -53,7 +55,7 @@
     let spiralElement = spiraleCanvas.getContext("2d");
     let boxSize = 50
     let turner = 1;
-    let isprime = true
+    let isPrime = true
     let squareX = 0
     let squareY = 0
     let array = [];
@@ -61,9 +63,9 @@
     let cubesAmount = 1;
     let intervalTime
     let timesLooped=0
-    let cubeNum=0
+    let cubeNum=1
 
-    function buttonWasPressed(){
+    function manualLoad(){   //debug reasons
       howManyTimes *= 2
       boxSize /= 2
       turner = 1;
@@ -73,7 +75,34 @@
       array = []
       cubesAmount = 1
       timesLooped=0
-      cubeNum=0
+      cubeNum=1
+      clearInterval(intervalTime)
+      let spiraleCanvas = document.getElementById("spiraleCanvas");
+
+      let viewportWidth = window.innerWidth;
+      let viewportHeight = window.innerHeight;
+      let minDimension = Math.min(viewportWidth, viewportHeight);
+      spiraleCanvas.width = spiraleCanvas.height = minDimension;
+      spiraleCanvas.classList.add("spiraleBorder");
+      squareX = (spiraleCanvas.width - boxSize) / 2;
+      squareY = (spiraleCanvas.height - boxSize) / 2;
+
+      caricaArray();
+
+      spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
+    }
+    
+    function buttonWasPressed(){
+      howManyTimes *= 2
+      boxSize /= 2
+      turner = 1;
+      isPrime = true
+      squareX = 0
+      squareY = 0
+      array = []
+      cubesAmount = 1
+      timesLooped=0
+      cubeNum=1
       clearInterval(intervalTime)
       drawSpiral()
     }
@@ -96,9 +125,6 @@
     }
 
     function printSquares() {
-
-      spiralElement.font = "20px Arial";
-      spiralElement.fillStyle = "black";
       
       for (let j = 0; j < 2; j++) {
           for (let i2 = 0; i2 < cubesAmount; i2++) {
@@ -121,18 +147,21 @@
             for (i3 = 2; i3 <= Math.sqrt(cubeNum); i3++){
               if (cubeNum % i3 == 0){
                 isPrime = false;
+                console.log("isPrime = "+isPrime+" | cubeNum = "+cubeNum+" | i3 = "+i3)
                 break;
               }
             }
 
             if (isPrime==true) {
                 spiralElement.fillStyle = "black";
-            } else{
-                spiralElement.fillStyle = "white";
+            } else if(isPrime==false) {
+                spiralElement.fillStyle = "red";
+            } else {
+                  spiralElement.fillStyle = "white";
             }
             
             spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
-            spiralElement.fillText(cubeNum, squareX, squareY);
+            console.log("THIS IS CUBE "+cubeNum)
             cubeNum++
           }
           turner++
