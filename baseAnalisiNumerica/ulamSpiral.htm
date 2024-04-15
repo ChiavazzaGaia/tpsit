@@ -54,7 +54,7 @@
     let howManyTimes = 50   //Cambia per aumentare quante volte
     let spiralElement = spiraleCanvas.getContext("2d");
     let boxSize = 50
-    let turner = 1;
+    let turner = 0;
     let isPrime = true
     let squareX = 0
     let squareY = 0
@@ -63,19 +63,19 @@
     let cubesAmount = 1;
     let intervalTime
     let timesLooped=0
-    let cubeNum=1
+    let cubeNum=2
 
     function manualLoad(){   //debug reasons
       howManyTimes *= 2
       boxSize /= 2
-      turner = 1;
+      turner = 0;
       isprime = true
       squareX = 0
       squareY = 0
       array = []
       cubesAmount = 1
       timesLooped=0
-      cubeNum=1
+      cubeNum=2
       clearInterval(intervalTime)
       let spiraleCanvas = document.getElementById("spiraleCanvas");
 
@@ -89,20 +89,21 @@
 
       caricaArray();
 
+      spiralElement.fillStyle = "green";
       spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
     }
     
     function buttonWasPressed(){
       howManyTimes *= 2
       boxSize /= 2
-      turner = 1;
+      turner = 0;
       isPrime = true
       squareX = 0
       squareY = 0
       array = []
       cubesAmount = 1
       timesLooped=0
-      cubeNum=1
+      cubeNum=2
       clearInterval(intervalTime)
       drawSpiral()
     }
@@ -119,7 +120,8 @@
       squareY = (spiraleCanvas.height - boxSize) / 2;
 
       caricaArray();
-      
+
+      spiralElement.fillStyle = "green";
       spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
       intervalTime = setInterval(printSquares, 1)
     }
@@ -154,10 +156,8 @@
 
             if (isPrime==true) {
                 spiralElement.fillStyle = "black";
-            } else if(isPrime==false) {
-                spiralElement.fillStyle = "red";
             } else {
-                  spiralElement.fillStyle = "white";
+                spiralElement.fillStyle = "white";
             }
             
             spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
