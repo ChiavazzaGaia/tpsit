@@ -41,8 +41,10 @@
 <body>
   <center>
     <button id="drawButton" onclick="buttonWasPressed()">Disegna la spirale</button>
-    <button onclick="manualLoad()">MANUAL PRESS FIRST</button>
+    <!--
+    <button onclick="manualLoad()">MANUAL PRESS FIRST</button>    //debug buttons
     <button onclick="printSquares()">DRAW SQUARES (PRESS ONCE PER SQUARE)</button>
+    -->
   </center>
   <br>
   <center>
@@ -65,6 +67,7 @@
     let timesLooped=0
     let cubeNum=2
 
+    <!--
     function manualLoad(){   //debug reasons
       howManyTimes *= 2
       boxSize /= 2
@@ -92,6 +95,7 @@
       spiralElement.fillStyle = "green";
       spiralElement.fillRect(squareX, squareY, boxSize, boxSize);
     }
+    -->
     
     function buttonWasPressed(){
       howManyTimes *= 2
