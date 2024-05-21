@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body onload="fillMatrix()">
+  <center
+    <br><br><br>
+    <button onclick="calcSum()">Calculate the sum</button>
+    <p id="output"></p>
+  </center>
+  <script>
+    const matrix1 = [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+    const matrix2 = [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
+    ];
+
+    let resultMatrix = [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+
+    let outputHTML = ""
+
+    function fillMatrix(){
+      for(let i=0; i<matrix1.length; i++){
+        for(let j=0; j<matrix1[i].length; j++){
+          matrix1[i][j]=i+j;
+          matrix2[i][j]=i+j+64;
+        }
+      }
+      console.log(matrix1)
+      console.log(matrix2)
+    }
+    
+    function calcSum(){
+      
+      for(let i=0; i<matrix1.length; i++){
+        for(let j=0; j<matrix1[i].length; j++){
+          resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+        }
+      }
+      console.log(resultMatrix)
+      
+      for(let i=0; i<matrix1.length; i++){
+        for(let j=0; j<matrix1[i].length; j++){
+          outputHTML += resultMatrix[i][j] + " ";
+        }
+        outputHTML += "<br>"
+      }
+      document.getElementById("output").innerHTML = outputHTML;
+      console.log(outputHTML)
+    }
+  </script>
+</body>
+</html>
