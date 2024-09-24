@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore di Numeri Casuali</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        #numbers {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #generate-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        #oddOrEven {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            width: 200px;
+            height: 275px;
+            border: black solid 2px;
+            margin-top: 20px;
+            margin: 15px auto;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px;
+        }
+        #boxDifference {
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            width: 200px;
+            height: 100px;
+            border: black solid 2px;
+            margin-top: 20px;
+            margin: 15px auto;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generatore di Numeri Casuali</h1>
+    <button id="generate-button">Genera Numero Casuale</button>
+    <div id="numbers"></div>
+    
+    <div id="oddOrEven"></div>
+
+    <div id="boxDifference"></div>
+
+    <script>
+        // Funzione per generare un numero casuale tra 1 e 100
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 100) + 1;
+        }
+
+        // Funzione per aggiornare il contenuto della pagina
+        function updateNumbers() {
+            const numbersDiv = document.getElementById('numbers');
+            const oddOrEvenDiv = document.getElementById('oddOrEven');
+            const boxDifferenceDiv = document.getElementById('boxDifference');
+            const randomNumber = getRandomNumber();
+            const randomNumber2 = getRandomNumber();
+            let oddEven = isNumOdd(randomNumber);
+            let oddEven2 = isNumOdd(randomNumber2);
+
+            oddOrEvenDiv.innerHTML += `Il numero è  ${oddEven} <br> Il secondo è ${oddEven2}`;
+            numbersDiv.innerHTML += `Numero Casuale: ${randomNumber} <br> Secondo Numero: ${randomNumber2}`;
+            boxDifferenceDiv.innerHTML += `La differenza tra i due numeri è ${randomNumber-randomNumber2}`;
+            console.log(randomNumber2)
+
+            if(isPrime(randomNumber)==true){
+                oddOrEvenDiv.innerHTML += "<br><br>Il numero è primo";
+            }else{
+                oddOrEvenDiv.innerHTML += "<br><br>Il numero non è primo";
+            }
+
+            if(isPrime(randomNumber2)==true){
+                oddOrEvenDiv.innerHTML += "<br><br>Il secondo è primo";
+            }else{
+                oddOrEvenDiv.innerHTML += "<br><br>Il secondo non è primo";
+            }
+        }
+
+        function isNumOdd(num)
+        {
+            if(num % 2 != 0){
+                return "dispari";
+            }
+            else{
+                return "pari";
+            }
+        }
+
+        function isPrime(num) {
+            if (num <= 1) return false; // 0 e 1 non sono primi
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false; // Divisibile per un numero diverso da 1 e se stesso
+            }
+            return true; // È primo
+        }
+        // Aggiunge un event listener al pulsante
+        document.getElementById('generate-button').addEventListener('click', updateNumbers);
+    </script>
+</body>
+</html>
