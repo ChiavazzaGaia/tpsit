@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input id="inputNum" placeholder="How many times?">
+    <br>
+    <button onclick="buttonClicked()">Print</button>
+    <div id="divNums"></div>
+
+<script>
+
+    var arrayPrime = [];
+
+    function buttonClicked()
+    {
+        var numAmount = document.getElementById("inputNum").value;
+        createArrayPrime(numAmount);
+        printArray();
+    }
+
+    function createArrayPrime(num)
+    {
+        for(i=0; i<num; i++)
+        {
+            if(isPrime(i)==true)
+            {
+                arrayPrime.push(i);
+            }
+        }
+    }
+
+    function printArray()
+    {
+        for(i=0; i<arrayPrime.length; i++)
+        {
+            const divElement = document.getElementById("divNums");
+            divElement.textContent += "  " + arrayPrime[i];
+        }
+    }
+
+    function isPrime(n) {
+    if (isNaN(n) || !isFinite(n) || n % 1 || n < 2) return false;
+    var m = Math.sqrt(n); //returns the square root of the passed value
+    for (var i = 2; i <= m; i++)
+        if (n % i == 0) return false;
+    return true;
+    }
+</script>
+</body>
+</html>
