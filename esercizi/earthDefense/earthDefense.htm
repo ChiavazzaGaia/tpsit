@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Defense</title>
+    <style>
+        #earthImage
+        {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: -1;
+        }
+
+        #mainNumberDiv
+        {
+            height: 100px;
+            width: 100px;
+            background-color: blanchedalmond;
+            border: black solid 2px;
+            position: absolute;
+            top: 43%;
+            right: 100px;
+            display: flex;                /*Use flexbox for centering*/
+            justify-content: center;       /*Center horizontally*/
+            align-items: center;           /*Center vertically*/
+            text-align: center;  
+            font-size: 70px;
+        }
+
+        #timerBox
+        {
+            border: white solid 2px;
+            background-color: wheat;
+            height: 50px;
+            width: 130px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #timerH1
+        {
+            font-size: 30px;
+            text-align: center;
+        }
+
+        body {
+            overflow: hidden;    /*Prevents scrolling down*/
+        }
+    </style>
+</head>
+<body onload="startFunction()">
+
+    <img src="images/earth.jpg" alt="IMG NOT LOADED - planet earth" id="earthImage"> 
+    <div id="mainNumberDiv"></div>
+    <div id="timerBox">
+        <h1 id="timerH1"></h1>
+    </div>
+
+<script src="mainJavaScript.js"></script>
+</body>
+</html>

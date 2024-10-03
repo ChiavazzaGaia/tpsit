@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial</title>
+    <style>
+        #earthImage {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: -1;
+        }
+        #mainBox {
+            height: 900px;
+            width: 850px;
+            background-color: blanchedalmond;
+            border: rgb(245, 198, 112) solid 10px;
+            position: absolute;
+            top: 50vh;
+            left: 50vw;
+            transform: translate(-50%, -50%);  /* Shift the div by 50% of its own width and height */
+            display: flex;                     /* Use flexbox for centering */
+            justify-content: center;           /* Center horizontally */
+            align-items: center;               /* Center vertically */
+            text-align: center;  
+            font-size: 70px;
+            flex-direction: column;            /* Stack items vertically */
+            overflow: auto;                    /* Allow scrolling if content exceeds the height */
+            border-radius: 100px;
+            padding:5px;
+        }
+        #pTitle{
+            font-size: 80px;
+            color: black;
+            margin: 0px;
+        }
+        .pClass {
+            font-size: 38px;
+            color: black;
+            margin: 0px;
+        }
+        #backButton
+        {
+            padding: 15px 30px; /* Add padding for a larger button */
+            font-size: 20px; /* Increase font size */
+            color: rgb(0, 0, 0); /* Text color */
+            background-color: rgb(255, 180, 40); /* Button color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/earth.jpg" alt="IMG NOT LOADED - planet earth" id="earthImage">
+    <div id="mainBox">
+        <p id="pTitle">TUTORIAL</p>
+        <br>
+        <p class="pClass">You have been chosen as the last hope to save Earth from an upcoming deadly meteor shower</p>
+        <p class="pClass">No pressure!</p>
+        <br>
+        <p class="pClass">Press on the meteors with a divider of the number on Earth to blow them up before they hit us</p>
+        <p class="pClass">And let those that aren't dividers come trough, they aren't going to collide</p>
+        <br>
+        <p class="pClass">Don't make too many mistakes though, or we won't make it!</p>
+        <br>
+        <button id="backButton" onclick="goBack()">Go back</button>
+    </div>
+
+    <script>
+        function goBack()
+        {
+            window.location.href = "mainMenu.htm"
+        }
+    </script>
+</body>
+</html>

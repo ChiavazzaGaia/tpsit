@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earth Defense</title>
+    <style>
+
+        /*Mostly done by Chat GPT, with some personal touches*/
+
+        body {
+            display: flex;
+            justify-content: center;            /*Center horizontally*/
+            align-items: center;                /*Center vertically*/
+            height: 100vh;                      /*Full height of the viewport*/
+            margin: 0;                          /*Remove default margin*/
+            flex-direction: column;             /*Arrange items in a column*/
+            position: relative;
+        }
+
+        #earthImage
+        {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: -1;
+        }
+
+        #startButton
+        {
+            padding: 15px 30px; /* Add padding for a larger button */
+            font-size: 20px; /* Increase font size */
+            color: rgb(0, 0, 0); /* Text color */
+            background-color: wheat; /* Button color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+            margin-bottom: 20px;
+        }
+
+        #inputID
+        {
+            border-radius: 5px;
+            width: 370px;
+            height: 40px;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        #choiceDiv
+        {
+            padding: 1px 4px;
+            font-size: 20px;
+            background-color: white;
+            border:none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: lightgray;
+            font-family: Arial, sans-serif;
+        }
+
+        .buttonsOptions
+        {
+            padding: 10px 10px; /* Add padding for a larger button */
+            font-size: 20px; /* Increase font size */
+            color: rgb(0, 0, 0); /* Text color */
+            background-color: wheat; /* Button color */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s, transform 0.3s; /* Transition for hover effects */
+            margin-bottom: 40px;
+        }
+
+        #buttonOptionsDiv
+        {
+            display: flex;
+            justify-content: space-between;
+            width: 300px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        #titleP
+        {
+            font-size: 100px;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="images/earth.jpg" alt="IMG NOT LOADED - planet earth" id="earthImage">
+    
+    <p id="titleP">Earth Defense</p>
+    <input id="inputID" placeholder="Choose a number (2-9 for best gameplay)"></input>
+
+    <div id="choiceDiv">
+        <p>Choose which gamemode to play</p>
+    </div>
+    
+    <div id="buttonOptionsDiv">
+        <button onclick="chooseGamemode(1)" class="buttonsOptions">Challenge (hard mode)</button>
+        <button onclick="chooseGamemode(2)" class="buttonsOptions">Sandbox (endless, best for learning)</button>
+    </div>
+
+    
+    <button onclick="startTutorial()" id="startButton">Start tutorial</button>
+    <button onclick="startGame()" id="startButton">Start game</button>
+
+<script src="menuScript.js"></script>
+</body>
+</html>
