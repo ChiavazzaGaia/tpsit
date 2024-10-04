@@ -14,10 +14,10 @@ function restartGame()
 
 function getQueryParamsSeconds() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('millisecondsValue');
+    return params.get('secondsValue');
 }
 
 function getQueryParamsMilliseconds() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('secondsValue');
+    return params.get('millisecondsValue');
 }
