@@ -1,0 +1,10 @@
+{"username":"Anon1","data":"Message2"}
+{"username":"Anon1","data":"How are you Anon2?"}
+{"username":"Anon2","data":"I'm good!"}
+{"username":"Anon2","data":"12345abcd"}
+{"username":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","data":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"}
+{"username":"TEST TEST","data":"@#çé+ù^زذذلنًُغف،نأひらがな"}
+{"username":"Admin","data":"sudo rm -rf /*"}
+{"username":"👽👽👽👽","data":"Hello mars"}
+{"data":"sadsa"}
+{"data":"dwa"}
