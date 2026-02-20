@@ -5,6 +5,9 @@ const fs = require('fs'); // Import fs to write to a file
 const app = express();
 const port = 3000;
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 // Middleware to parse URL-encoded data (form submissions)
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -40,6 +43,8 @@ app.post('/submit', (req, res) => {
 });
 
 app.post('/account', (req, res) => {
+    console.log(req.body);
+
     const { username, password, action } = req.body;
     const userData = { username, password};
 
@@ -48,6 +53,9 @@ app.post('/account', (req, res) => {
             if (err && err.code !== 'ENOENT') {
                 return res.status(500).send('Error reading accounts');
             }
+
+            data = data || ''; // Handle crashes from undefined data
+
 
             const accounts = data
                 .split('\n')
@@ -64,18 +72,46 @@ app.post('/account', (req, res) => {
             const userExists = accounts.some(account => account.username === username);
 
             if (userExists) {
-                return;
+                return res.status(409).send('User already exists');
             }
 
             fs.appendFile('accountsLogin.txt', JSON.stringify(userData) + '\n', err => {
                 if (err) {
                     return res.status(500).send('Error saving account');
                 }
-                return;
+                res.status(201).send('Account created');
             });
         });
     } else if (action === 'login') {
-        // Handle login logic
+        fs.readFile('accountsLogin.txt', 'utf8', (err, data) => {
+            if (err && err.code !== 'ENOENT') {
+                return res.status(500).send('Error reading accounts');
+            }
+
+            data = data || ''; // Handle crashes from undefined data
+
+            const accounts = data
+                .split('\n')
+                .filter(line => line.trim() !== '')
+                .map(line => {
+                    try {
+                        return JSON.parse(line);
+                    } catch {
+                        return null;
+                    }
+                })
+                .filter(account => account !== null);
+
+            const account = accounts.find(
+                acc => acc.username === username && acc.password === password
+            );
+
+            if (account) {
+                return res.status(200).send('working');
+            } else {
+                return res.status(401).send('Invalid credentials');
+            }
+        });
     } else {
         res.status(400).send('Unknown action');
     }

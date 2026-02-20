@@ -6,7 +6,7 @@ function fetchData() {
             dataDisplay.innerHTML = ''; // Clear previous data
             data.reverse().forEach(item => {
                 const p = document.createElement('p');
-                if (item.username == "")
+                if (item.username == "" || item.username == undefined)
                 {
                     item.username = "Anon";
                 }
@@ -55,12 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const accountForm = document.getElementById('accountForm');
+    let accountAction = null;
+
+    accountForm.querySelectorAll('button[type="submit"]').forEach(button => {
+        button.addEventListener('click', () => {
+            accountAction = button.value; // "signup" or "login"
+        });
+    });
 
     if (accountForm) {
         accountForm.addEventListener('submit', (event) => {
             event.preventDefault();
 
             const formData = new FormData(accountForm);
+
+            if (accountAction) {
+                formData.append('action', accountAction);
+            }
+
             const data = new URLSearchParams(formData);
 
             fetch('/account', {

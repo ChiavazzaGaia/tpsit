@@ -1,0 +1,4 @@
+{"username":"hasta","password":"siempre"}
+{"username":"odio","password":"indifferenti"}
+{"username":"goob","password":"station"}
+{"username":"lorem","password":"ipsum"}

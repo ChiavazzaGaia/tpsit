@@ -9,12 +9,12 @@
 <body>
     <h1>Social Post It</h1>
     <h2>Login or sign up</h2>
-    <form action="/account" method="POST"> <!-- Form submits to /submit -->
+    <form id="accountForm" action="/account" method="POST"> <!-- Form submits to /submit -->
         <label for="data">Enter your username:</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username"required>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
         <br>
         <label for="data">Enter your password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password"required>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
         <br>
         <button type="submit" name="action" value="signup">Sign up</button>
         <button type="submit" name="action" value="login">Login</button>
