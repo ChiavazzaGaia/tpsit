@@ -4,3 +4,5 @@
 {"username":"Moony3343","password":"Test"}
 {"username":"wea","password":"dsacx"}
 {"username":"weq","password":"dsz"}
+{"username":"hasta","password":"siempre","bio":"no iphone 200000000 starve","pfp":"/avatars/1775805945694-avatar.jpg"}
+{"username":"odio","password":"indifferenti"}

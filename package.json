@@ -18,8 +18,9 @@
   "homepage": "https://github.com/ChiavazzaGaia/tpsit#readme",
   "description": "",
   "dependencies": {
-    "body-parser": "^2.2.0",
-    "express": "^5.1.0",
+    "body-parser": "^2.2.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
     "fs": "^0.0.1-security",
     "path": "^0.12.7"
   }

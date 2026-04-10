@@ -1,142 +1,139 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser'); // Import body-parser
-const fs = require('fs'); // Import fs to write to a file
+const fs = require('fs');
+const session = require('express-session');
+const multer = require('multer');
+
 const app = express();
 const port = 3000;
+const ACCOUNTS_FILE = 'accountsLogin.txt';
+const DATA_FILE = 'data.txt';
 
-app.use(express.urlencoded({ extended: false }));
+const folders = ['./public/uploads', './public/avatars'];
+folders.forEach(f => { if (!fs.existsSync(f)) fs.mkdirSync(f, { recursive: true }); });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, file.fieldname === 'avatar' ? './public/avatars/' : './public/uploads/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.fieldname + path.extname(file.originalname));
+    }
+});
+const upload = multer({ storage: storage });
+
 app.use(express.json());
-
-// Middleware to parse URL-encoded data (form submissions)
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'social-secret-key',
+    resave: false,
+    saveUninitialized: false
+}));
 
-// Route to handle form submission
-app.post('/submit', (req, res) => {
-    const userInput = req.body; // Access the submitted data
-    // Save the data to a file (data.txt)
-    fs.appendFile('data.txt', JSON.stringify(userInput) + '\n', (err) => {
-        if (err) {
-            return res.status(500).send('Error saving data');
-        }
-    });
-    fs.readFile('data.txt', 'utf8', (readErr, data) => {
-        if (readErr) {
-            console.error('Error reading file for trimming:', readErr);
-            return;
-        }
+const getAccounts = () => {
+    if (!fs.existsSync(ACCOUNTS_FILE)) return [];
+    return fs.readFileSync(ACCOUNTS_FILE, 'utf8').split('\n').filter(l => l).map(l => JSON.parse(l));
+};
 
-        const lines = data.split('\n').filter(line => line.trim() !== '');
+const getPosts = () => {
+    if (!fs.existsSync(DATA_FILE)) return [];
+    return fs.readFileSync(DATA_FILE, 'utf8').split('\n').filter(l => l).map(l => JSON.parse(l));
+};
 
-        if (lines.length > 10) {
-            const trimmed = lines.slice(-10).join('\n') + '\n';
-            fs.writeFile('data.txt', trimmed, 'utf8', (writeErr) => {
-                if (writeErr) {
-                    console.error('Error trimming file:', writeErr);
-                }
-            });
-        }
-    });
-
+app.get('/status', (req, res) => {
+    const user = getAccounts().find(a => a.username === req.session.user);
+    res.json({ user: user ? { username: user.username, pfp: user.pfp, bio: user.bio } : null });
 });
 
 app.post('/account', (req, res) => {
-    console.log(req.body);
-
     const { username, password, action } = req.body;
-    const userData = { username, password};
+    const accounts = getAccounts();
+    const userFound = accounts.find(a => a.username === username);
 
     if (action === 'signup') {
-        fs.readFile('accountsLogin.txt', 'utf8', (err, data) => {
-            if (err && err.code !== 'ENOENT') {
-                return res.status(500).send('Error reading accounts');
-            }
+        if (userFound) return res.status(400).json({ error: 'Taken' });
+        const newUser = { username, password, bio: "", pfp: `https://ui-avatars.com/api/?name=${username}` };
+        fs.appendFileSync(ACCOUNTS_FILE, JSON.stringify(newUser) + '\n');
+        req.session.user = username;
+        return res.json({ success: true });
+    }
+    if (userFound && userFound.password === password) {
+        req.session.user = username;
+        return res.json({ success: true });
+    }
+    res.status(401).json({ error: 'Denied' });
+});
 
-            data = data || ''; // Handle crashes from undefined data
-
-
-            const accounts = data
-                .split('\n')
-                .filter(line => line.trim() !== '')
-                .map(line => {
-                    try {
-                        return JSON.parse(line);
-                    } catch {
-                        return null;
-                    }
-                })
-                .filter(account => account !== null);
-
-            const userExists = accounts.some(account => account.username === username);
-
-            if (userExists) {
-                return res.status(409).send('User already exists');
-            }
-
-            fs.appendFile('accountsLogin.txt', JSON.stringify(userData) + '\n', err => {
-                if (err) {
-                    return res.status(500).send('Error saving account');
-                }
-                res.status(201).send('Account created');
-            });
-        });
-    } else if (action === 'login') {
-        fs.readFile('accountsLogin.txt', 'utf8', (err, data) => {
-            if (err && err.code !== 'ENOENT') {
-                return res.status(500).send('Error reading accounts');
-            }
-
-            data = data || ''; // Handle crashes from undefined data
-
-            const accounts = data
-                .split('\n')
-                .filter(line => line.trim() !== '')
-                .map(line => {
-                    try {
-                        return JSON.parse(line);
-                    } catch {
-                        return null;
-                    }
-                })
-                .filter(account => account !== null);
-
-            const account = accounts.find(
-                acc => acc.username === username && acc.password === password
-            );
-
-            if (account) {
-                return res.status(200).send('working');
-            } else {
-                return res.status(401).send('Invalid credentials');
-            }
-        });
-    } else {
-        res.status(400).send('Unknown action');
+app.post('/update-profile', upload.single('avatar'), (req, res) => {
+    if (!req.session.user) return res.status(401).send();
+    let accounts = getAccounts();
+    const index = accounts.findIndex(a => a.username === req.session.user);
+    if (index !== -1) {
+        if (req.body.bio) accounts[index].bio = req.body.bio;
+        if (req.file) accounts[index].pfp = `/avatars/${req.file.filename}`;
+        fs.writeFileSync(ACCOUNTS_FILE, accounts.map(a => JSON.stringify(a)).join('\n') + '\n');
+        res.json(accounts[index]);
     }
 });
 
-// Route to get all submitted data
+app.post('/submit', upload.single('image'), (req, res) => {
+    if (!req.session.user) return res.status(401).send();
+    const post = {
+        id: Date.now().toString(),
+        username: req.session.user,
+        data: req.body.data,
+        image: req.file ? `/uploads/${req.file.filename}` : null,
+        timestamp: new Date().toLocaleString()
+    };
+    fs.appendFileSync(DATA_FILE, JSON.stringify(post) + '\n');
+    res.json(post);
+});
+
 app.get('/data', (req, res) => {
-    fs.readFile('data.txt', 'utf8', (err, data) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error reading data' });
-        }
-
-        try {
-            // Split lines, filter out empty lines, and parse each line as a JSON object
-            const parsedData = data.split('\n')
-                                    .filter(line => line) // Remove empty lines
-                                    .map(line => JSON.parse(line)); // Parse each line as JSON
-
-            res.json(parsedData.reverse());  // Send back the data as JSON, reversed
-        } catch (parseError) {
-            return res.status(500).json({ error: 'Error parsing data: ' + parseError.message });
-        }
-    });
+    const query = req.query.search ? req.query.search.toLowerCase() : "";
+    const accounts = getAccounts();
+    const posts = getPosts()
+        .filter(p => p.data.toLowerCase().includes(query))
+        .map(p => {
+            const author = accounts.find(a => a.username === p.username);
+            p.pfp = author ? author.pfp : `https://ui-avatars.com/api/?name=${p.username}`;
+            return p;
+        }).reverse();
+    res.json(posts);
 });
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+app.delete('/post/:id', (req, res) => {
+    if (!req.session.user) return res.status(401).send();
+    let posts = getPosts();
+    const post = posts.find(p => p.id === req.params.id);
+    if (post && post.username === req.session.user) {
+        posts = posts.filter(p => p.id !== req.params.id);
+        fs.writeFileSync(DATA_FILE, posts.map(p => JSON.stringify(p)).join('\n') + '\n');
+        return res.json({ success: true });
+    }
+    res.status(403).send();
 });
+
+app.put('/post/:id', (req, res) => {
+    if (!req.session.user) return res.status(401).send();
+    let posts = getPosts();
+    const index = posts.findIndex(p => p.id === req.params.id && p.username === req.session.user);
+    if (index !== -1) {
+        posts[index].data = req.body.data;
+        fs.writeFileSync(DATA_FILE, posts.map(p => JSON.stringify(p)).join('\n') + '\n');
+        return res.json({ success: true });
+    }
+    res.status(403).send();
+});
+
+app.get('/api/user/:username', (req, res) => {
+    const user = getAccounts().find(a => a.username === req.params.username);
+    if (user) {
+        const { password, ...publicData } = user;
+        res.json(publicData);
+    } else res.status(404).send();
+});
+
+app.post('/logout', (req, res) => { req.session.destroy(); res.json({ success: true }); });
+
+app.listen(port, () => console.log(`Server: http://localhost:${port}`));

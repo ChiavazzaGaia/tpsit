@@ -1,19 +1,53 @@
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers horizontally */
-    height: 100vh; /* Full viewport height */
-    margin: 0; /* Remove default margin */
+:root {
+    --bg: #f0f2f5; --header: #ffffff; --card: #ffffff; --text: #1c1e21; --accent: #0084ff; --border: #dddfe2;
+}
+[data-theme="dark"] {
+    --bg: #18191a; --header: #242526; --card: #242526; --text: #e4e6eb; --border: #3e4042;
+}
+body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-top: 80px; transition: background 0.2s; }
+
+header {
+    position: fixed; top: 0; width: 100%; height: 65px; background: var(--header);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 20px; box-sizing: border-box; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000;
 }
 
-h1, h2, h3 {
-    margin-bottom: 20px;
+.search-container { flex-grow: 1; max-width: 300px; margin: 0 15px; }
+#searchInput { width: 100%; padding: 8px 15px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text); outline: none; }
+
+.header-left, .header-right { display: flex; align-items: center; gap: 10px; }
+
+.icon-btn { 
+    background: none; border: 1px solid var(--border); color: var(--text); 
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
 }
 
-form {
-    margin-bottom: 30px;
+/* FIX: Logout button fit */
+.logout-pill {
+    background: none; border: 1px solid var(--border); color: var(--text);
+    padding: 5px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem;
 }
+.logout-pill:hover { background: rgba(0,0,0,0.05); }
 
-#dataDisplay {
-    margin-top: 20px;
-}
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 15px; margin-bottom: 20px; position: relative; }
+.post-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.post-actions { display: flex; gap: 8px; }
+.text-btn { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.85rem; }
+.text-btn.delete { color: #ff4444; }
+
+.nav-pfp { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid var(--accent); }
+.mini-pfp { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; cursor: pointer; }
+
+/* FIX: Ensure links are visible */
+.post-body a { color: var(--accent); text-decoration: none; font-weight: bold; }
+.post-body a:hover { text-decoration: underline; }
+
+main { max-width: 600px; margin: 0 auto; padding: 0 15px; }
+.post-img { width: 100%; border-radius: 8px; margin-top: 10px; }
+.timestamp { font-size: 0.7rem; opacity: 0.5; text-align: right; margin-top: 10px; }
+
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000; }
+.modal-content { background: var(--card); margin: 50px auto; padding: 25px; width: 90%; max-width: 400px; border-radius: 15px; position: relative; }
+.auth-field { display: block; width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid var(--border); border-radius: 5px; background: var(--bg); color: var(--text); box-sizing: border-box; }
+.login-trigger { background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }

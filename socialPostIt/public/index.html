@@ -2,32 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Social Post-It Pro</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <h1>Social Post It</h1>
-    <h2>Login or sign up</h2>
-    <form id="accountForm" action="/account" method="POST"> <!-- Form submits to /submit -->
-        <label for="data">Enter your username:</label>
-        <input type="text" id="username" name="username" placeholder="Enter your username" required>
-        <br>
-        <label for="data">Enter your password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <br>
-        <button type="submit" name="action" value="signup">Sign up</button>
-        <button type="submit" name="action" value="login">Login</button>
-    </form>
-    <h2>Write your message</h2>
-    <form action="/submit" method="POST"> <!-- Form submits to /submit -->
-        <label for="data">Enter something:</label>
-        <input type="text" id="data" name="data" required>
-        <button type="submit">Send</button>
-    </form>
-    <button onclick="refresh()">Refresh</button>
-    <h3>Submitted Data:</h3>
-    <div id="dataDisplay"></div>
+    <header>
+        <div class="header-left">
+            <h1 style="margin:0; font-size: 1.2rem;">Post-It</h1>
+            <button id="themeBtn" class="icon-btn">🌙</button>
+        </div>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search posts...">
+        </div>
+
+        <div id="auth-ui" class="header-right"></div>
+    </header>
+
+    <main>
+        <div id="post-box" style="display:none; background:var(--card); border:1px solid var(--border); border-radius:12px; margin-bottom:20px; overflow:hidden;">
+            <div style="background:rgba(0,0,0,0.03); padding:8px; border-bottom:1px solid var(--border);">
+                <button onclick="insertFormat('**', '**')">B</button>
+                <button onclick="insertFormat('*', '*')">I</button>
+                <button onclick="insertFormat('[', '](https://)')">🔗</button>
+            </div>
+            <form id="msgForm">
+                <textarea id="msgInput" placeholder="New post..." style="width:100%; border:none; padding:15px; background:transparent; color:var(--text); outline:none; min-height:80px;"></textarea>
+                <div style="padding:10px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border);">
+                    <input type="file" id="imgInput" accept="image/*">
+                    <button type="submit" style="background:var(--accent); color:white; border:none; padding:8px 20px; border-radius:6px; cursor:pointer;">Post</button>
+                </div>
+            </form>
+        </div>
+        <div id="chatFeed"></div>
+    </main>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('authModal')" style="float:right; cursor:pointer;">&times;</span>
+            <h2>Sign In</h2>
+            <input type="text" id="u" placeholder="Username" class="auth-field">
+            <input type="password" id="p" placeholder="Password" class="auth-field">
+            <button onclick="auth('login')" style="width:48%;">Login</button>
+            <button onclick="auth('signup')" style="width:48%;">Sign Up</button>
+        </div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('profileModal')" style="float:right; cursor:pointer;">&times;</span>
+            <div id="profileBody"></div>
+            <div id="editProfileSection" style="display:none; margin-top:15px; border-top:1px solid var(--border); padding-top:15px;">
+                <label>Bio:</label>
+                <textarea id="newBio" style="width:100%; margin:5px 0; border-radius:5px; border:1px solid var(--border); background:var(--bg); color:var(--text);"></textarea>
+                <label>Update Picture:</label><br>
+                <input type="file" id="newAvatar" accept="image/*" style="margin:5px 0;"><br>
+                <button onclick="saveProfile()" style="width:100%; margin-top:10px; padding:10px; background:var(--accent); color:white; border:none; border-radius:5px; cursor:pointer;">Save Changes</button>
+            </div>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>
