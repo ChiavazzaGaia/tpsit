@@ -3,6 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const session = require('express-session');
 const multer = require('multer');
+require('dotenv').config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const app = express();
 const port = 3000;
@@ -135,5 +139,27 @@ app.get('/api/user/:username', (req, res) => {
 });
 
 app.post('/logout', (req, res) => { req.session.destroy(); res.json({ success: true }); });
+
+app.post('/api/generate-ai', async (req, res) => {
+    if (!req.session.user) return res.status(401).json({ error: 'Non autorizzato' });
+    
+    const userPrompt = req.body.prompt;
+    if (!userPrompt) return res.status(400).json({ error: 'Prompt mancante' });
+
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        
+        const fullPrompt = `Scrivi un breve post per un social network basato su questo suggerimento: "${userPrompt}". 
+        Il post deve essere conciso, informale, pronto per essere pubblicato. Non includere saluti o testo introduttivo, solo il contenuto del post.`;
+        
+        const result = await model.generateContent(fullPrompt);
+        const text = result.response.text();
+        
+        res.json({ text: text.trim() });
+    } catch (error) {
+        console.error("Errore durante la generazione AI:", error);
+        res.status(500).json({ error: 'Errore interno del server' });
+    }
+});
 
 app.listen(port, () => console.log(`Server: http://localhost:${port}`));

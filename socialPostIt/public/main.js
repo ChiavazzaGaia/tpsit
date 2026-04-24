@@ -159,3 +159,35 @@ document.getElementById('msgForm').onsubmit = async (e) => {
     document.getElementById('msgForm').reset();
     refreshChat();
 };
+
+async function generateAI() {
+    const promptText = prompt("Di cosa vuoi che parli il tuo post? (es: 'Scrivi un post simpatico sul caffè')");
+    if (!promptText) return;
+    
+    const originalValue = msgInput.value;
+    msgInput.value = "Generazione in corso con l'AI...";
+    msgInput.disabled = true;
+    
+    try {
+        const res = await fetch('/api/generate-ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: promptText })
+        });
+        
+        if (res.ok) {
+            const data = await res.json();
+            msgInput.value = data.text; 
+        } else {
+            msgInput.value = originalValue;
+            alert("Si è verificato un errore durante la generazione.");
+        }
+    } catch (e) {
+        console.error(e);
+        msgInput.value = originalValue;
+        alert("Errore di connessione al server.");
+    } finally {
+        msgInput.disabled = false;
+        msgInput.focus();
+    }
+}
