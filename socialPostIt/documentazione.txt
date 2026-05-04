@@ -1,0 +1,30 @@
+Il progetto "Social Post-It Pro" è una micro-piattaforma social sviluppata privilegiando la leggerezza e l'assenza di dipendenze complesse. L'architettura è divisa in un backend Node.js/Express e un frontend interamente scritto in Vanilla JavaScript, HTML5 e CSS3.
+
+Per mantenere il setup semplice, si è evitato l'uso di database esterni (come SQL o MongoDB). La persistenza dei dati è gestita direttamente sul file system locale tramite il modulo nativo fs di Node, scrivendo i dati in formato JSON su file di testo (accountsLogin.txt per le utenze e data.txt per il feed). L'upload dei file fisici (immagini allegate ai post e avatar dei profili) è gestito tramite il middleware multer, che salva i media staticamente all'interno delle directory public/uploads e public/avatars.
+
+Scelte di Sviluppo Frontend
+Il client è costruito come una Single Page Application (SPA) senza l'ausilio di framework come React o Vue. Il DOM viene manipolato e aggiornato dinamicamente via JS.
+
+Real-time simulato: L'aggiornamento del feed chat non utilizza WebSockets (visto che non erano ancora fatti quando è stato scritto, e una riscrittura richiederebbe riscrivere quasi l'intero progetto), ma si affida a un polling asincrono impostato con un setInterval ogni 10 secondi, che richiede al backend il JSON aggiornato dei post.
+
+Gestione Tema: Il toggle per il tema dark/light si basa sulla commutazione di variabili CSS collegate all'attributo data-theme sul tag root HTML. Per garantire la persistenza della scelta dell'utente tra una visita e l'altra, il valore viene salvato nel localStorage.
+
+Parsing del testo (Markdown-lite): La formattazione non usa librerie pesanti. La funzione parseText() sfrutta espressioni regolari (regex) per intercettare pattern specifici e convertirli in tag HTML (<b>, <i>, <a>) prima di iniettare il contenuto nel DOM.
+
+Integrazione AI (Generative AI)
+Lato backend è stato integrato l'SDK @google/generative-ai per assistere la stesura dei post. L'endpoint protetto /api/generate-ai riceve il prompt in input, lo concatina a delle istruzioni di sistema per limitare la formattazione ("Scrivi un breve post... Non includere saluti...") e interroga il modello gemini-2.5-flash. Durante l'attesa della risposta di rete, il frontend disabilita la textarea per dare feedback visivo all'utente.
+
+Manuale d'Uso e Funzionalità
+L'interfaccia è pensata per essere autoesplicativa, ecco un riepilogo delle funzioni principali e di come interagire con esse:
+
+Accesso e Sessioni: L'applicazione utilizza express-session per la sicurezza. Se navighi senza essere autenticato, la piattaforma è in modalità "Sola Lettura" (puoi vedere i post ma non crearne). Cliccando sul pulsante "Login" in alto a destra, si apre un modal che permette sia l'accesso che la registrazione diretta di un nuovo account (che per default riceve un avatar generato proceduralmente tramite ui-avatars.com).
+
+Creazione Post e Formattazione: Una volta loggato, compare il box di creazione. Puoi allegare un'immagine tramite l'icona file e usare i pulsanti in alto (B, I, 🔗) per inserire le scorciatoie di formattazione. La sintassi riconosciuta è: grassetto, *corsivo* e [nome link](https://indirizzo).
+
+Assistente AI (Chiedi all'AI): Nel box di testo è presente il pulsante "✨ Chiedi all'AI". Cliccandolo, si aprirà un prompt nativo in cui puoi suggerire un argomento (ad esempio: "scrivimi un post sul cucinare una torta di mele"). Il sistema genererà il contenuto testuale e lo inserirà automaticamente nella casella, pronto per essere raffinato o postato.
+
+Gestione Profilo: Cliccando sul tuo avatar (nella barra di navigazione o sui post) si apre il modal del profilo. Se stai visualizzando il tuo stesso profilo, apparirà la sezione di modifica per aggiornare la biografia e caricare una nuova immagine (che sovrascriverà quella di default su tutto il sito).
+
+Modifica e Cancellazione: Sui post di tua proprietà compaiono i pulsanti "Edit" e "Delete". La modifica avviene rapidamente tramite un prompt del browser che carica il testo corrente. La cancellazione rimuove immediatamente il file e aggiorna il feed per tutti.
+
+Ricerca: La barra testuale nell'header è reattiva in tempo reale. Digitando qualsiasi termine, il frontend aggiorna il query parameter e richiede al backend un array filtrato, permettendo di trovare post specifici senza dover ricaricare la pagina.
